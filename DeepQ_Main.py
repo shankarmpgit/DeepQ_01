@@ -18,15 +18,17 @@ BUFFER_SIZE =  50000
 MIN_REPLAY_SIZE = 1000
 EPSILON_START = 1.0
 EPSILON_END = 0.02
-EPSILON_DECAY = 100000
-TARGET_UPDATE_FREQUENCY = 1000
+EPSILON_DECAY = 40000
+TARGET_UPDATE_FREQUENCY = 2000
 OPTIMIZER_LR = 5e-4
-EPISODES = 100 
+EPISODES = 1500 
 WALL = -1
 GOAL = 1
 AGENT = 6
 PATH = 0
 ENEMY = 3
+COLUMNS = 4
+ROWS = 4
 
 colors = {
     WALL: "black", 
@@ -41,7 +43,7 @@ def main():
     training_params = DQC.TrainingParams(EPSILON_START,EPSILON_DECAY,EPSILON_END,EPISODES)
     deepQ_params = DQC.DeepQParams(GAMMA,BATCH_SIZE,BUFFER_SIZE,MIN_REPLAY_SIZE,TARGET_UPDATE_FREQUENCY,OPTIMIZER_LR)
     character_params = DQC.CharacterParams(WALL,PATH,AGENT,ENEMY,GOAL)
-    m = DQC.Maze(mz.simple_maze(5,5),NUM_ACTIONS,character_params)
+    m = DQC.Maze(mz.simple_maze(ROWS,COLUMNS),NUM_ACTIONS,character_params)
 
     policy_net = DQC.DQN(m)
     target_net = DQC.DQN(m)
@@ -59,7 +61,7 @@ def main():
 
     for i in range(training_params.training_episodes):
         episode_count+=1
-        m = DQC.Maze(mz.simple_maze(5,5),NUM_ACTIONS,character_params)
+        m = DQC.Maze(mz.simple_maze(ROWS,COLUMNS),NUM_ACTIONS,character_params)
         done = 0
         while not done:
             total_steps+=1
@@ -77,8 +79,12 @@ def main():
         print()
         print(f'Steps in episode: {episode_steps}')
         print(f'Score for episode: {avg_reward}')
+        print(f'total number of steps: {total_steps}')
         avg_reward = 0.0
         episode_steps = 0
+
+    torch.save(policy_net.state_dict(),'/home/shankar/Documents/Github/DeepQlearning/DeepQ_01/state_dic_policy_net/test_v3.pth' )
+    
 
         
         

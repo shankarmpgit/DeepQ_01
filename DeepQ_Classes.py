@@ -100,7 +100,9 @@ class Maze:
         e = self.env.copy()
         zero_indices = np.argwhere(e == self.space_rep) 
         if len(zero_indices) == 0:
-            self.specific_spawn_agent(0,0)
+            randrow = random.randint(0,self.rows-1)
+            randcol = random.randint(0,self.columns-1)
+            self.specific_spawn_agent(randrow,randcol)
         else:
             random_index = np.random.choice(zero_indices.shape[0])
             random_zero_index = tuple(zero_indices[random_index])
@@ -158,7 +160,7 @@ class Maze:
             else:
                 self.steps_since_last_point = 0
 
-            reward+= e[a.i,a.j]
+            reward+= 0.2 * e[a.i,a.j]
             self.agent = a
 
             e[a.i,a.j] = 0
