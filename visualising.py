@@ -46,7 +46,7 @@ def read_in_parameters():
     character_params = DQC.CharacterParams(WALL,PATH,AGENT,ENEMY,GOAL)
     m = DQC.Maze(mz.simple_maze(ROWS,COLUMNS),NUM_ACTIONS,character_params)
     test_net  = DQC.DQN(m)
-    test_net.load_state_dict(torch.load('/home/shankar/Documents/Github/DeepQlearning/state_dic_policy_net/test_v3.pth'))
+    test_net.load_state_dict(torch.load('/home/shankar/Documents/Github/DeepQlearning/DeepQ_01/state_dic_policy_net/test_v3.pth'))
     return test_net
 
 def visualise(m:DQC.Maze, game_canvas:Canvas,root:Tk):
