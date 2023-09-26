@@ -182,7 +182,7 @@ class Maze:
         self.update_pellets()
         new_state = self.return_state()
 
-        #Finds out if the game is done
+        #Finds out if the game is done1
         if (is_enemy == True) or (self.has_won()):
             is_done = True
 
